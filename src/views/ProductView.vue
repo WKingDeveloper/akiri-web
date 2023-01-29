@@ -53,6 +53,78 @@ export default {
           salePrice: 8000,
           discountRate: 58,
           url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
+        },
+        {
+          id: 1,
+          brand: '아소부',
+          title:
+            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
+          image:
+            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
+          retailPrice: 18000,
+          salePrice: 8000,
+          discountRate: 58,
+          url: 'https://www.29cm.co.kr/product/804631'
         }
       ]
     }
@@ -89,13 +161,13 @@ body {
 
 .container {
   display: flex;
-  width: 1080px;
+  flex-wrap: wrap;
 }
 
 .card {
   width: min-content;
   padding: 20px;
-  margin: 0 20px;
+  margin: 20px;
   background: #fff;
   border-radius: 30px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.04);
@@ -122,7 +194,7 @@ body {
 }
 
 .card:hover .card-image img {
-  transform: scale(1.02) rotate(-3deg) translateX(-5px);
+  transform: scale(1.02) rotate(-2deg);
 }
 
 .card .card-image .bx-star {
