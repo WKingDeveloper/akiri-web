@@ -1,13 +1,16 @@
 <template>
+  <div v-if="loading">Loading...</div>
+  <div v-else-if="error">Error: {{ error.message }}</div>
+
   <div class="container">
-    <div v-for="product in products" :key="product.id">
+    <div v-for="product in products" :key="product.node.id">
       <div class="card">
         <div class="card-image">
-          <img :src="product.image" alt="..." />
+          <img :src="product.node.imageUrl" alt="..." />
         </div>
         <div class="card-content">
-          <h3>{{ product.brand }}</h3>
-          <p>{{ product.title }}</p>
+          <h3>{{ product.node.brand }}</h3>
+          <p>{{ product.node.title }}</p>
           <p
             style="
               text-decoration: line-through;
@@ -15,14 +18,14 @@
               color: darkgrey;
             "
           >
-            {{ product.retailPrice }}
+            {{ product.node.retailPrice }}
           </p>
           <div>
             <p style="display: inline; font-size: 20px; color: coral">
-              {{ product.discountRate }}%
+              {{ product.node.discountRate }}%
             </p>
             <p style="display: inline; font-size: 20px; padding-left: 5px">
-              {{ product.salePrice }}원
+              {{ product.node.salePrice }}원
             </p>
           </div>
 
@@ -37,99 +40,54 @@
 </template>
 
 <script>
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+import { computed, watch } from 'vue'
+
 export default {
   components: {},
-  data() {
-    return {
-      products: [
+  data() {},
+  setup(props) {
+    const { result, loading, error } = useQuery(
+      gql`
         {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
-        },
-        {
-          id: 1,
-          brand: '아소부',
-          title:
-            '[리퍼상품 한정판매] 캐나다 아소부 스테인레스 리유저블 스트로우',
-          image:
-            'https://img.29cm.co.kr/next-product/2020/09/03/b95a7220a34446299f1b86bb44ce6c74_20200903162829.jpg?width=700',
-          retailPrice: 18000,
-          salePrice: 8000,
-          discountRate: 58,
-          url: 'https://www.29cm.co.kr/product/804631'
+          products {
+            edges {
+              node {
+                id
+                platform
+                url
+                brand
+                title
+                imageUrl
+                category
+                currencyCode
+                retailPrice
+                salePrice
+                discountRate
+                status
+                createdAt
+                updatedAt
+              }
+            }
+          }
         }
-      ]
+      `
+    )
+    const products = computed(() => result.value?.products?.edges ?? [])
+
+    watch(() => {
+      console.log('result.value = ', result.value)
+      console.log('products = ', products.value)
+    })
+
+    return {
+      products,
+      loading,
+      error
     }
   },
-  setup() {},
+
   created() {},
   mounted() {},
   unmounted() {},
@@ -151,19 +109,10 @@ export default {
   font-family: 'Montserrat', sans-serif;
 }
 
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f4f7f8;
-}
-
 .container {
   display: flex;
   flex-wrap: wrap;
 }
-
 .card {
   width: min-content;
   padding: 20px;
@@ -180,8 +129,8 @@ body {
 
 .card .card-image {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 220px;
+  height: 220px;
   padding: 10px;
   text-align: center;
   background: #f4f7f8;
@@ -197,19 +146,6 @@ body {
   transform: scale(1.02) rotate(-2deg);
 }
 
-.card .card-image .bx-star {
-  cursor: pointer;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 10px;
-  font-size: 20px;
-  color: #f7ae04;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.04);
-}
-
 .card .card-content h3 {
   color: #222;
   font-size: 16px;
@@ -222,6 +158,7 @@ body {
   font-weight: 500;
   margin: 8px 0 22px;
   text-align: justify;
+  height: 40px;
 }
 
 .card .card-content button {
@@ -248,6 +185,16 @@ body {
 
   .container .card {
     margin: 20px;
+  }
+
+  .card .card-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    text-align: center;
+    background: #f4f7f8;
+    border-radius: 12px;
   }
 }
 </style>
