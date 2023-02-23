@@ -18,14 +18,14 @@
               color: darkgrey;
             "
           >
-            {{ product.node.retailPrice }}
+            {{ parseInt(product.node.retailPrice, 10) }}
           </p>
           <div>
             <p style="display: inline; font-size: 20px; color: coral">
               {{ product.node.discountRate }}%
             </p>
             <p style="display: inline; font-size: 20px; padding-left: 5px">
-              {{ product.node.salePrice }}원
+              {{ parseInt(product.node.salePrice, 10) }} 원
             </p>
           </div>
 
@@ -93,7 +93,7 @@ export default {
   unmounted() {},
   methods: {
     openProductLink(product) {
-      window.open(product.url)
+      window.open(product.node.url)
     }
   }
 }
